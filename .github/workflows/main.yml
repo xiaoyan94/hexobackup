@@ -39,7 +39,7 @@ jobs:
     
     - name: Setup Hexo env
       env:
-        ACTION_DEPLOY_KEY: ${{ secrets.ACTION_DEPLOY_KEY }}
+        ACTION_DEPLOY_KEY: ${{ secrets.PRIVATE_KEY_FOR_GITHUB_AND_GITEE }}
       run: |
         # set up private key for deploy
         mkdir -p ~/.ssh/
