@@ -3,6 +3,7 @@
 import time
 from selenium import webdriver
 from selenium.webdriver.common.alert import Alert
+from selenium.webdriver.common.action_chains import ActionChains
 
 driver_path = "chromedriver"
 
@@ -40,7 +41,7 @@ driver.get('https://gitee.com/xy94/xy94/pages')
 # 点击更新按钮--通过xpath确定点击位置 
 text=driver.find_element_by_xpath('//*[@id="pages-branch"]/div[7]') #.click()
 print(text.text)
-time.sleep(1)
+time.sleep(5)
 
 try:
     text.click()
@@ -48,10 +49,11 @@ try:
     Alert(driver).accept()
 except Exception as e:
     print(e)
+    ActionChains(driver).move_to_element(text).click().perform()
     pass
 
 # # 等待5秒更新
-time.sleep(5)
+time.sleep(10)
 
 # 这个print其实没事什么用,如果真的要测试脚本是否运行成功，可以用try来抛出异常
 print("成功")
