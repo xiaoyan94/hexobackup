@@ -64,6 +64,6 @@ jobs:
         echo "gōng zuò mù lù：$REPOSITORY_HOME"
         cd $REPOSITORY_HOME
         chmod +x replace_url_baidusitemap.sh
-        . ./replace_url_baidusitemap.sh
+        bash ./replace_url_baidusitemap.sh
         hexo d
 
