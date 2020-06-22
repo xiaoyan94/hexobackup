@@ -8,8 +8,8 @@ from selenium.webdriver.common.action_chains import ActionChains
 driver_path = "chromedriver"
 
 chrome_options = webdriver.ChromeOptions()
-chrome_options.add_argument('--headless')
-chrome_options.add_argument('--disable-gpu')
+# chrome_options.add_argument('--headless')
+# chrome_options.add_argument('--disable-gpu')
 chrome_options.add_argument("user-agent='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36'")
 driver = webdriver.Chrome(options=chrome_options,executable_path=driver_path)
 
@@ -34,7 +34,7 @@ ele = driver.find_element_by_xpath(
 print(ele.get_property("value"))
 print(ele.get_attribute("value"))
 ele.click()
-time.sleep(2)
+time.sleep(5)
 
 # 切换到gitee pages界面--改为you_gitee_id
 driver.get('https://gitee.com/xy94/xy94/pages')
@@ -45,15 +45,17 @@ time.sleep(5)
 
 try:
     text.click()
+    time.sleep(2)
     # 确认更新提示框--这个函数的作用是确认提示框
     Alert(driver).accept()
 except Exception as e:
     print(e)
+    text=driver.find_element_by_xpath('//*[@id="pages-branch"]/div[7]') 
     ActionChains(driver).move_to_element(text).click().perform()
     pass
 
 # # 等待5秒更新
-time.sleep(10)
+time.sleep(5)
 
 # 这个print其实没事什么用,如果真的要测试脚本是否运行成功，可以用try来抛出异常
 print("成功")
