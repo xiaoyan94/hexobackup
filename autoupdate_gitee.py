@@ -38,6 +38,8 @@ time.sleep(5)
 
 # 切换到gitee pages界面--改为you_gitee_id
 driver.get('https://gitee.com/xy94/xy94/pages')
+content=driver.page_source
+print(content)
 # 点击更新按钮--通过xpath确定点击位置 
 text=driver.find_element_by_xpath('//*[@id="pages-branch"]/div[7]') #.click()
 print(text.text)
@@ -45,17 +47,18 @@ time.sleep(5)
 
 try:
     text.click()
-    time.sleep(2)
+    time.sleep(3)
     # 确认更新提示框--这个函数的作用是确认提示框
     Alert(driver).accept()
 except Exception as e:
     print(e)
-    text=driver.find_element_by_xpath('//*[@id="pages-branch"]/div[7]') 
+    time.sleep(2)
+    text=driver.find_element_by_xpath('/html/body/div[3]/div[2]/div/div[2]/div/form/div[7]') 
     ActionChains(driver).move_to_element(text).click().perform()
     pass
 
 # # 等待5秒更新
-time.sleep(5)
+time.sleep(10)
 
 # 这个print其实没事什么用,如果真的要测试脚本是否运行成功，可以用try来抛出异常
 print("成功")
