@@ -55,6 +55,15 @@ jobs:
         npm i
   
     - name: Deploy
+      env:
+        REPOSITORY_HOME: ${{github.workspace}}
       run: |
         # publish
-        hexo generate && hexo deploy # 执行部署程序
+        # hexo generate && hexo deploy # 执行部署程序
+        hexo g
+        echo "gōng zuò mù lù：$REPOSITORY_HOME"
+        cd $REPOSITORY_HOME
+        chmod +x replace_url_baidusitemap.sh
+        . ./replace_url_baidusitemap.sh
+        hexo d
+
