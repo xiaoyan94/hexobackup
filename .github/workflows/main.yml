@@ -66,4 +66,12 @@ jobs:
         chmod +x replace_url_baidusitemap.sh
         bash ./replace_url_baidusitemap.sh
         hexo d
-
+        # Install Google Chrome
+        # https://askubuntu.com/questions/79280/how-to-install-chrome-browser-properly-via-command-line
+        sudo apt-get install libxss1 libappindicator1 libindicator7
+        wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        sudo dpkg -i google-chrome*.deb  # Might show "errors", fixed by next line
+        sudo apt-get install -f
+        wget http://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip
+        python3 autoupdate_gitee.py
