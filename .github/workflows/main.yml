@@ -95,4 +95,4 @@ jobs:
         script: |
           whoami
           ls -al
-          python3 autoupdate_gitee.py
+          python3 update_gitee.py
