@@ -89,7 +89,8 @@ jobs:
       with:
         host: ${{ secrets.SSH_HOST }}
         username: ${{ secrets.SSH_USERNAME }}
-        password: ${{ secrets.SSH_PASSWORD }}
+        # password: ${{ secrets.SSH_PASSWORD }}
+        key: ${{ secrets.DEPLOY_BANWAGON_PRIV_KEY }}
         port: ${{ secrets.SSH_PORT }}
         script: |
           whoami

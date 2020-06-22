@@ -102,7 +102,7 @@ deploy:
   type: git
   repo: 
     github: git@github.com:xiaoyan94/xiaoyan94.github.io.git
-    gitee: git@gitee.com:xy94/xy94.git
+    # gitee: git@gitee.com:xy94/xy94.git
     # github: git@github.com:honjun/honjun.github.io.git
     # github: https://github.com/honjun/honjun.github.io.git
     # coding: https://git.coding.net/hojun/hojun.git
