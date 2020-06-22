@@ -53,6 +53,7 @@ jobs:
         # install dependencies
         npm i -g hexo-cli # 安装hexo
         npm i
+        npm install hexo-generator-baidu-sitemap@0.1.6 --save
   
     - name: Deploy
       env:
@@ -74,17 +75,23 @@ jobs:
         cd $REPOSITORY_HOME
         # Install Google Chrome
         # https://askubuntu.com/questions/79280/how-to-install-chrome-browser-properly-via-command-line
-        sudo apt-get install libxss1 libappindicator1 libindicator7
-        wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        sudo dpkg -i google-chrome*.deb  # Might show "errors", fixed by next line
-        sudo apt-get install -f
-        wget http://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip
-        unzip chromedriver_linux64.zip
-        pip3 install selenium
+        # sudo apt-get install libxss1 libappindicator1 libindicator7
+        # wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+        # sudo dpkg -i google-chrome*.deb  # Might show "errors", fixed by next line
+        # sudo apt-get install -f
+        # wget http://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip
+        # unzip chromedriver_linux64.zip
+        # pip3 install selenium
+        # 以上步骤已经转移至远程服务器上的脚本执行,通过下面的SSH连接至远程服务器。
 
-    - name: Update Gitee Pages
-      env:
-        REPOSITORY_HOME: ${{github.workspace}}
-      run: |
-        cd $REPOSITORY_HOME
-        python3 autoupdate_gitee.py
+    - name: multiple command
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.SSH_HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        key: ${{ secrets.DEPLOY_BANWAGON_PRIV_KEY }}
+        port: ${{ secrets.SSH_PORT }}
+        script: |
+          whoami
+          ls -al
+          python3 autoupdate_gitee.py

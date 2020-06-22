@@ -7,3 +7,11 @@ tags: [Github,hexo,Github Actions]
 Something about Continuously Integrity / Continuously Deploy...
 
 Github Actions.
+
+.github/workflows/main.yml文件代码：
+
+```yml
+something...
+```
+
+SSH
