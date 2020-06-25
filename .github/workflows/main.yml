@@ -53,6 +53,7 @@ jobs:
         # install dependencies
         npm i -g hexo-cli # 安装hexo
         npm i
+        npm install hexo-generator-feed --save
         npm install hexo-generator-baidu-sitemap@0.1.6 --save
   
     - name: Deploy

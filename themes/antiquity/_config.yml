@@ -2,9 +2,10 @@
 menu:
   首页: /
   归档: /archives
-  速记: /quick-notes
+  小抄: /quick-notes
   关于: /about
 
+# RSS订阅需要安装：npm install hexo-generator-feed --save
 rss: /atom.xml
 nav: right
 mobile_nav: right
