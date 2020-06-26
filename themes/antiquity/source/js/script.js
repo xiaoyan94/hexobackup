@@ -1,3 +1,19 @@
+// Author: Ray-Eldath
+// refer to:
+//  - https://github.com/theme-next/hexo-theme-next/blob/master/source/js/src/utils.js
+class utils {
+  static getContentVisibilityHeight() {
+      var docHeight = $('.visible').height(),
+          winHeight = $(window).height(),
+          contentVisibilityHeight = (docHeight > winHeight) ? (docHeight - winHeight) : ($(document).height() -
+              winHeight);
+      return contentVisibilityHeight;
+  }
+  static isMobile() {
+      return window.screen.width < 767;
+  }
+}
+
 (function($){
   // Search
   var $searchWrap = $('#search-form-wrap'),
@@ -134,4 +150,25 @@
 
     $fullpage.removeClass('mobile-nav-on');
   });
+
+  if (utils.isMobile()) {
+    $('.scroll').hide();
+    return;
+  }
+  $(window).scroll(function () {
+      let scrollValue = $(window).scrollTop();
+
+      var scrollPercentRounded = Math.round((scrollValue / utils.getContentVisibilityHeight()) * 100);
+      var scrollPercentMaxed = (scrollPercentRounded > 100) ? 100 : scrollPercentRounded;
+
+      $('.scrollpercent').html(scrollPercentMaxed);
+      scrollValue > 100 ? $('.scroll').fadeIn() : $('.scroll').fadeOut();
+  });
+
+  $('.scroll').click(function () {
+      $('html, body').animate({
+          scrollTop: 0
+      }, 300);
+  })
+
 })(jQuery);

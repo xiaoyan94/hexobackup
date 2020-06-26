@@ -1,7 +1,7 @@
 ---
-title: Linux/macOS终端命令之————basename / dirname,从完整文件名获取文件名/路径名
+title: Linux/macOS终端命令之——basename / dirname,从完整文件名获取文件名/路径名
 date: 2020-06-21 19:57:45
-tags: [Shell,Linux命令]
+tags: [Shell,Linux]
 ---
 
 ## Linux/macOS终端命令，如何从包含完整路径的文件名 获取 不包含文件夹路径只包含文件名的 基本名称
