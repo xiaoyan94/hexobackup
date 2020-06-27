@@ -121,7 +121,7 @@ public class WordCountApp {
 }
 ```
 
-### 代码分析
+### WordCount代码分析
 
 Mapper的实现类如下：在map方法中，一次处理一行的数据，由`TextInputFormat`指定，它将一行字符串以空格为分隔符拆分成单词，并输出 `单词-次数` 键值对 `<<word>,1>`
 
@@ -326,17 +326,304 @@ Reducer的实现类如下：在reduce方法中，只是对values进行求和，�
     root@brave-post-2:~/hadoop/script#
     ```
 
-## 作业的核心
+---
 
-应用程序通常实现`Mapper`和`Reducer`接口以提供`map`和`reduce`方法。 这些构成了`job`（作业）的核心。
+### 使用Combiner降低map和reduce之间的数据传输量
 
-### Mapper
+```java
+package org.example;
 
-`Mapper`将输入的键/值对`key/value`映射为一组中间键/值对`key/value`。映射是将输入记录转换为中间记录的单个任务。 转换后的中间记录不必与输入记录具有相同的类型。 给定的输入对可能映射为零或许多输出对。
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-Hadoop MapReduce框架为每个InputSplit生成一个map任务。InputSplit是由InputFormat生成的。
+import java.io.IOException;
 
-总体而言，Mapper
-<https://archive.cloudera.com/cdh5/cdh/5/hadoop-2.6.0-cdh5.7.0/hadoop-mapreduce-client/hadoop-mapreduce-client-core/MapReduceTutorial.html>
+public class CombinerApp {
 
-### Reducer
+    /**
+     * Map：读取输入文件
+     */
+    public static class MyMapper extends Mapper<LongWritable, Text, Text,
+            LongWritable> {
+        LongWritable one = new LongWritable(1);
+
+        @Override
+        protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+            String line = value.toString(); //每一行的数据
+            String[] words = line.split(" "); //按空格 分隔符拆分
+            for (String word : words) {
+                context.write(new Text(word), one);
+            }
+        }
+    }
+
+    /**
+     * Reduce：归并操作
+     */
+    public static class MyReducer extends Reducer<Text, LongWritable, Text,
+            LongWritable> {
+        @Override
+        protected void reduce(Text key, Iterable<LongWritable> values, Context context) throws IOException, InterruptedException {
+
+            long sum = 0;
+            for (LongWritable value :
+                    values) {
+                //求key总次数
+                sum += value.get();
+            }
+            // 输出此次reduce统计结果
+            context.write(key, new LongWritable(sum));
+        }
+    }
+
+    /**
+     * 定义Driver：
+     *
+     * @param args
+     */
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
+
+        Configuration configuration = new Configuration();
+
+        // 删除已存在的输出目录
+        Path outPath = new Path(args[1]);
+        FileSystem fs = FileSystem.get(configuration);
+        if (fs.exists(outPath)){
+            fs.delete(outPath, true);
+            System.out.println("output file exists, but is has deleted");
+        }
+
+        Job job = Job.getInstance(configuration, "wordcount");
+
+        // 设置Job处理的类
+        job.setJarByClass(CombinerApp.class);
+
+        // 设置作业处理的输入路径
+        FileInputFormat.setInputPaths(job, new Path(args[0]));
+
+        // 设置map相关参数
+        job.setMapperClass(MyMapper.class);
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(LongWritable.class);
+
+        // 设置reduce相关参数
+        job.setReducerClass(MyReducer.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(LongWritable.class);
+
+        // 设置Combiner处理类，相当于在Map之后先在本地进行一次合并之后再通过网络传输数据给Reduce Tasks
+        // 使用场景：求次数；求和；  不能使用的场景：平均数
+        job.setCombinerClass(MyReducer.class);
+
+        // 设置作业处理的输出路径
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
+    }
+}
+```
+
+关于Combiner：设置Combiner处理类，相当于在`map`操作之后先在本地进行一次合并（即local aggregation）之后再通过网络传输数据给`reduce`。
+
+不过combiner的使用是有场景限制的：比如求次数、求和可以用；但是求平均数就不能用。
+
+---
+
+### 和wordcount相似的partitioner
+
+PartitionerApp 代码：
+
+```java
+package org.example;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Partitioner;
+import org.apache.hadoop.mapreduce.Reducer;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+import java.io.IOException;
+
+public class PartitionerApp {
+
+    /**
+     * Map：读取输入文件
+     */
+    public static class MyMapper extends Mapper<LongWritable, Text, Text,
+            LongWritable> {
+
+        @Override
+        protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+            String line = value.toString(); //每一行的数据
+            String[] words = line.split(" "); //按空格 分隔符拆分
+
+            context.write(new Text(words[0]),
+                    new LongWritable(Long.parseLong(words[1])));
+
+        }
+    }
+
+    /**
+     * Reduce：归并操作
+     */
+    public static class MyReducer extends Reducer<Text, LongWritable, Text,
+            LongWritable> {
+        @Override
+        protected void reduce(Text key, Iterable<LongWritable> values, Context context) throws IOException, InterruptedException {
+
+            long sum = 0;
+            for (LongWritable value :
+                    values) {
+                //求key总次数
+                sum += value.get();
+            }
+            // 输出此次reduce统计结果
+            context.write(key, new LongWritable(sum));
+        }
+    }
+
+    public static class MyPartitioner extends Partitioner<Text, LongWritable> {
+
+        @Override
+        public int getPartition(Text text, LongWritable longWritable, int numPartitions) {
+            switch (text.toString()) {
+                case "xiaomi":
+                    return 0;
+                case "huawei":
+                    return 1;
+                case "apple":
+                    return 2;
+                default:
+                    return 3;
+            }
+        }
+    }
+
+    /**
+     * 定义Driver：
+     *
+     * @param args
+     */
+    public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
+
+        Configuration configuration = new Configuration();
+
+        // 删除已存在的输出目录
+        Path outPath = new Path(args[1]);
+        FileSystem fs = FileSystem.get(configuration);
+        if (fs.exists(outPath)) {
+            fs.delete(outPath, true);
+            System.out.println("output file exists, but is has deleted");
+        }
+
+        Job job = Job.getInstance(configuration, "wordcount");
+
+        // 设置Job处理的类
+        job.setJarByClass(PartitionerApp.class);
+
+        // 设置作业处理的输入路径
+        FileInputFormat.setInputPaths(job, new Path(args[0]));
+
+        // 设置map相关参数
+        job.setMapperClass(MyMapper.class);
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(LongWritable.class);
+
+        // 设置reduce相关参数
+        job.setReducerClass(MyReducer.class);
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(LongWritable.class);
+
+        // 设置job的Partitioner
+        job.setPartitionerClass(MyPartitioner.class);
+        // 同时还需要为job设置4个reduce task，每个partition一个
+        job.setNumReduceTasks(4);
+
+        // 设置作业处理的输出路径
+        FileOutputFormat.setOutputPath(job, new Path(args[1]));
+
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
+    }
+}
+```
+
+对于PartitionerApp，现要统计出不同品牌的手机总销量。假设输入文件in.txt，给出了手机品牌和对应的销量：
+
+```plain
+huawei 200
+apple 180
+xiaomi 100
+huawei 150
+apple 30
+nokia 66
+meizu 66
+honor 88
+```
+
+在Hadoop上运行PartiitonerApp之后，输出文件夹中会得到四个输出文件，因为在`MyPartitioner`类中指定了4个划分。这四个输出文件的文件名分别是`part-r-00000`,`part-r-00001`,`part-r-00002`,`part-r-00003`。
+
+查看第一个输出文件`part-r-00000`，会得到第一个划分的结果：
+
+```plain
+xiaomi 100
+```
+
+查看第二个输出文件`part-r-00001`，会得到第二个划分的结果：
+
+```plain
+huawei 350
+```
+
+查看第三个输出文件`part-r-00002`，会得到第三个划分的结果：
+
+```plain
+apple 210
+```
+
+查看第四个输出文件`part-r-00003`，会得到第四个划分的结果：
+
+```plain
+honor 88
+meizu 66
+nokia 66
+```
+
+从最后一个文件的结果可以看出来MapReduce对`key`默认根据字母进行了排序。honor > meizu > nokia 。
+
+与wordcount相比，多了一个Patitioner Class：
+
+```java
+    public static class MyPartitioner extends Partitioner<Text, LongWritable> {
+
+        @Override
+        public int getPartition(Text text, LongWritable longWritable, int numPartitions) {
+            switch (text.toString()) {
+                case "xiaomi":
+                    return 0;
+                case "huawei":
+                    return 1;
+                case "apple":
+                    return 2;
+                default:
+                    return 3;
+            }
+        }
+    }
+```
+
+`getPartition(Text text, LongWritable longWritable, int numPartitions)`第一个参数是`key`，第二个参数是`value`，第三个参数`int numPartitions`是表示哪个partition的整数。
