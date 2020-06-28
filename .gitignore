@@ -2,6 +2,7 @@
 Thumbs.db
 db.json
 *.log
+!10000_access.log
 node_modules/
 public/
 .deploy*/
