@@ -83,7 +83,7 @@ jobs:
         # wget http://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip
         # unzip chromedriver_linux64.zip
         # pip3 install selenium
-        echo "此步骤已经转移至远程服务器上的脚本执行,通过下面的SSH连接至远程服务器。
+        echo "此步骤已经转移至远程服务器上的脚本执行,通过下面的SSH连接至远程服务器。"
 
     - name: Auto update Gitee Pages
       uses: appleboy/ssh-action@master
