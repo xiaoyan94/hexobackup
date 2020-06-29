@@ -152,23 +152,68 @@ class utils {
   });
 
   if (utils.isMobile()) {
-    $('.scroll').hide();
-    return;
+    $('#moblieGoTop').show();
+  }else{
+    $('#moblieGoTop').hide();
   }
-  $(window).scroll(function () {
-      let scrollValue = $(window).scrollTop();
+  // $('#moblieGoTop').click(
+  // function topFunction() {
+  //   document.body.scrollTop = 0;
+  //   document.documentElement.scrollTop = 0;
+  // })
+  if (document.body.clientWidth <= 860) {
+    console.log(document.body.clientWidth+"document.body.clientWidth")
 
-      var scrollPercentRounded = Math.round((scrollValue / utils.getContentVisibilityHeight()) * 100);
-      var scrollPercentMaxed = (scrollPercentRounded > 100) ? 100 : scrollPercentRounded;
-
-      $('.scrollpercent').html(scrollPercentMaxed);
-      scrollValue > 100 ? $('.scroll').fadeIn() : $('.scroll').fadeOut();
-  });
-
-  $('.scroll').click(function () {
+    $('#moblieGoTop').on('click', function (event) {
+      event.preventDefault();
       $('html, body').animate({
-          scrollTop: 0
-      }, 300);
-  })
+          scrollTop: 0,
+      }, scroll_top_duration);
+      return false;
+    });
+    window.onscroll = function () {
+        scrollFunction()
+    };
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          $("#moblieGoTop")[0].style.display = "block";
+        } else {
+          $("#moblieGoTop")[0].style.display = "none";
+        }
+    }
+
+  }
+  
+
+  var offset = 100,
+        offset_opacity = 1200,
+        scroll_top_duration = 700,
+        $back_to_top = $('.cd-top');
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > offset) {
+            $back_to_top.addClass('cd-is-visible');
+            $(".changeSkin-gear").css("bottom", "0");
+            if ($(window).height() > 950) {
+                $(".cd-top.cd-is-visible").css("top", "0");
+            } else {
+                $(".cd-top.cd-is-visible").css("top", ($(window).height() - 950) + "px");
+            }
+        } else {
+            $(".changeSkin-gear").css("bottom", "-999px");
+            $(".cd-top.cd-is-visible").css("top", "-900px");
+            $back_to_top.removeClass('cd-is-visible cd-fade-out');
+        }
+        if ($(this).scrollTop() > offset_opacity) {
+            $back_to_top.addClass('cd-fade-out');
+        }
+    });
+    //smooth scroll to top
+    $back_to_top.on('click', function (event) {
+        event.preventDefault();
+        $('html, body').animate({
+            scrollTop: 0,
+        }, scroll_top_duration);
+        return false;
+    });
 
 })(jQuery);
