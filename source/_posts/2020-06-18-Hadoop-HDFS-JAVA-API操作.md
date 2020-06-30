@@ -291,7 +291,7 @@ root@brave-post-2:~# cat $HADOOP_HOME/etc/hadoop/core-site.xml
 <configuration>
     <property>
         <name>fs.defaultFS</name>
-        <value>hdfs://0.0.0.0:8020</value> #这里得填公网IP地址，不能为0.0.0.0
+        <value>hdfs://ip:8020</value> #这里得填公网IP地址，不能为0.0.0.0
     </property>
     <property>
         <name>hadoop.tmp.dir</name>

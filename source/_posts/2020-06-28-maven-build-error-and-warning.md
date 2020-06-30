@@ -88,3 +88,21 @@ tags: [Maven]
    </properties>
    </project>
    ```
+  
+<https://github.com/LeeKemp/UserAgentParser>  
+通过`git clone`或者浏览器下载到本地后，使用命令行进入到其主目录下，然后通过maven命令对其进行打包并安装到本地仓库里：
+
+`mvn clean package -DskipTest`
+
+`mvn clean install -DskipTest`
+
+安装完成后，在工程pom.xml 中添加依赖：
+
+```xml
+<!-- 添加UserAgent解析的依赖 -->
+ <dependency>
+ <groupId>com.kumkee</groupId>
+ <artifactId>UserAgentParser</artifactId>
+ <version>0.0.1</version>
+ </dependency>
+```
