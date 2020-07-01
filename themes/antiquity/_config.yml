@@ -38,8 +38,8 @@ archive_type: 'monthly'
 show_count: false
 
 # Background
-# background_image: /images/bg.jpeg
-background_title: 空城盼故人
+# background_image: /images/bg.jpg
+# background_title: 空城盼故人
 
 # favicon
 favicon: https://q1.qlogo.cn/g?b=qq&nk=979727728&s=640

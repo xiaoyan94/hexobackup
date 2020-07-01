@@ -120,7 +120,11 @@ button::-moz-focus-inner {
 body{
   line-height: 1.5;
   color: #333;
-  background: #FAF3E1;
+  background: #D2E9FA;
+  /* background-image: url('https://s2.hdslb.com/bfs/static/blive/blfe-dynamic-web/static/img/background.bc725153.png'); */
+  background-size: top/contain;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   font-size: 14px;
   font-family: Arial, Roboto, "Droid Sans", "Hiragino Sans GB", "Microsoft YaHei", "Simsun", STXihei, "sans-serif";
 }
@@ -181,11 +185,11 @@ html, body, #fullpage{
   /* display: none; */
 }
 #wrapper {
-  background-image: url('../images/bg.jpg');
-  background-color: #C7C9EA;
+  /* background-image: url('../images/bg.jpg'); */
+  /* background-color: #D2E9FA; */
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: cover;
+  /* background-attachment: fixed;; */
+  background-size: top/contain;
   position: absolute;
   right: 0;
   width: 100%;
