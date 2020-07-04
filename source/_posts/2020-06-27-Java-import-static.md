@@ -15,7 +15,7 @@ tags: [Java]
 举个例子，仅使用`import`关键字时，代码可能是这样的：
 
 ```java
-import static java.lang.Math;
+import java.lang.Math;
 //使用类名.静态成员调用
 double r = Math.cos(Math.PI * theta);
 ```
