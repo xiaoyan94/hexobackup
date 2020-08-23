@@ -55,6 +55,8 @@ jobs:
         npm i
         npm install hexo-generator-feed --save
         npm install hexo-generator-baidu-sitemap@0.1.6 --save
+        npm install https://github.com/CodeFalling/hexo-asset-image --save
+        echo "安装hexo-asset-image,配合vscode-paste-image使用"
   
     - name: Hexo Deploy
       env:
