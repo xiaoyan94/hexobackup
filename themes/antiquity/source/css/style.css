@@ -785,3 +785,7 @@ html, body, #fullpage{
     flex-direction: column;
   }
 }
+/* mermaid 样式 在浏览器调试后发现加！important 后 mermaid 背景就透明了 */
+.mermaid {
+  background: transparent !important;
+ }
