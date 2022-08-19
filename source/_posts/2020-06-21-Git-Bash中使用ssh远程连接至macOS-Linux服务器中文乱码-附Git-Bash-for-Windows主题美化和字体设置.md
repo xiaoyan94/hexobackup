@@ -4,7 +4,7 @@ date: 2020-06-21 23:36:03
 tags: [Git Bash,ssh,中文乱码]
 ---
 
-## Windows Git Bash 主题美化和字体设置
+## <a id="top1">Windows Git Bash 主题美化和字体设置</a>
 
 ### ssh远程连接至服务器，终端命令提示符等乱码
 
@@ -78,6 +78,10 @@ CursorType=block
 2. [Mac OS 終端機美化(Mac OS Terminal)][2]
 3. [【vscode】windows中使用zsh美化vscode终端][3]
 4. [一款基于 Electron 的跨平台终端 Terminal Emulator: Hyper][4]
+
+---
+
+[回到顶部](#top1)
 
 ---
 
