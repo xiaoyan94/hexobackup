@@ -2,6 +2,13 @@
 <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
 <% if (!index && post.comments){ %>
 <div id="vcommentsContainer"></div>
+<!--引用评论框输入特效js文件-->
+<%- js('js/shuru') %>
+<script>
+  POWERMODE.colorful = true; // make power mode colorful
+  POWERMODE.shake = true; // turn off shake
+  document.body.addEventListener('input', POWERMODE);
+</script>
 <!-- valine评论系统 -->
 <script>
   new Valine({
