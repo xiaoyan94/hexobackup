@@ -9,6 +9,8 @@ tags: [软件]
 下载方式：VMware官网
 激活方式：输入密钥 `ZF3R0-FHED2-M80TY-8QYGC-NPKYF`
 
+<!-- more -->
+
 ## 激活方式
 
 ### 16版本
