@@ -119,7 +119,7 @@ button::-moz-focus-inner {
 
 body{
   line-height: 1.5;
-  color: #333;
+  color: rgb(0, 0, 0);
   background: #D2E9FA;
   /* background-image: url('https://s2.hdslb.com/bfs/static/blive/blfe-dynamic-web/static/img/background.bc725153.png'); */
   background-size: top/contain;
@@ -135,14 +135,18 @@ iframe {
 
 a {
   text-decoration: none;
-  color: #333;
+  color: rgb(0, 0, 0);
 }
 
 a:focus,
 a:hover,
 a:hover {
   text-decoration: none;
-  color: #de1c31
+  color: blue;
+  text-shadow: 0 0 10px rgb(0, 119, 255),0 0 20px rgb(0, 98, 255),0 0 30px rgb(0, 128, 255);
+  /* 设置发光效果 */
+  /* font-size: larger; */
+  font-weight: bolder;
 }
 
 img {
@@ -186,7 +190,7 @@ html, body, #fullpage{
 }
 #wrapper {
   /* background-image: url('../images/bg.jpg'); */
-  /* background-color: #D2E9FA; */
+  background-color: rgba(255, 255, 255, .49);
   background-repeat: no-repeat;
   /* background-attachment: fixed;; */
   background-size: top/contain;
@@ -224,11 +228,13 @@ html, body, #fullpage{
 #header {
   position: relative;
   height: 50px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, .3)
+  box-shadow: 0 1px 6px rgba(0, 0, 0, .3);
+  /* background: rgba(255, 255, 255, .49) */
 }
 
-.head-box {
-}
+/* .head-box {
+  background: rgba(255, 255, 255, .49)
+} */
 .nav-box {
   display: flex;
   justify-content: flex-end;
@@ -240,6 +246,85 @@ html, body, #fullpage{
   padding: 14px 20px;
   display: block;
 }
+
+.nav-box a:hover,
+.avatar-name:hover {
+  padding: 14px 20px;
+  display: block;
+  text-decoration: none;
+  color: blue;
+  text-shadow: 0 0 10px rgb(0, 119, 255),0 0 20px rgb(0, 98, 255),0 0 30px rgb(0, 128, 255);
+  /* 设置发光效果 */
+  font-size: larger;
+  font-weight: bolder;
+
+  /* 设置导航栏发光动态效果 */
+  -webkit-animation: Glow 0.5s ease infinite alternate;	
+  /* //兼容Chrome */
+  animation: Glow 0.5s ease infinite alternate;
+}
+
+.avatar-slogan:hover {
+  text-decoration: none;
+  color: blue;
+  text-shadow: 0 0 10px rgb(0, 119, 255),0 0 20px rgb(0, 98, 255),0 0 30px rgb(0, 128, 255);
+  /* 设置发光效果 */
+  /* font-size: larger; */
+  /* font-weight: bolder; */
+
+  /* 设置导航栏发光动态效果 */
+  -webkit-animation: Glow 0.5s ease infinite alternate;	
+  /* //兼容Chrome */
+  animation: Glow 0.5s ease infinite alternate;
+}
+
+@-webkit-keyframes Glow {	
+  /* //兼容Chrome 和 Safari */
+  from {
+      text-shadow: 0 0 10px rgb(0, 21, 255),
+                   0 0 20px rgb(0, 204, 255),
+                   0 0 30px rgb(0, 94, 255),
+                   0 0 40px #0800a6,
+                   0 0 70px #1e00a6,
+                   0 0 80px #0077a6,
+                   0 0 100px #8a00a6,
+                   0 0 150px #0053a6;
+  }
+  to {
+      text-shadow: 0 0 5px rgb(255, 0, 0),
+                   0 0 10px rgb(255, 0, 0),
+                   0 0 15px rgb(255, 0, 0),
+                   0 0 20px #a60000,
+                   0 0 35px #a60000,
+                   0 0 40px #a60000,
+                   0 0 50px #a60000,
+                   0 0 75px #a60000;
+  }
+}
+@keyframes Glow {
+  from {
+    text-shadow: 0 0 10px rgb(0, 21, 255),
+                 0 0 20px rgb(0, 204, 255),
+                 0 0 30px rgb(0, 94, 255),
+                 0 0 40px #0800a6,
+                 0 0 70px #1e00a6,
+                 0 0 80px #0077a6,
+                 0 0 100px #8a00a6,
+                 0 0 150px #0053a6;
+  }
+  to {
+      color: rgba(1, 247, 255, 0);
+      text-shadow: 0 0 5px rgba(174, 255, 0, 0.275),
+                  0 0 10px rgba(132, 255, 0, 0.04),
+                  0 0 15px rgba(0, 255, 55, 0.02),
+                  0 0 20px #a6000072,
+                  0 0 35px #a6000015,
+                  0 0 40px #a6000017,
+                  0 0 50px #a60000ec,
+                  0 0 75px #a600000f;
+  }
+}
+
 .mobile-nav-box{
   position: absolute;
   top: 0;
@@ -303,7 +388,8 @@ html, body, #fullpage{
   margin-bottom: 50px;
   position: relative;
   padding: 30px;
-  background: rgba(255, 255, 255, .85)  
+  /* background: rgba(255, 255, 255, .85)   */
+  /* background: rgba(255, 255, 255, .49) */
 }
 .widget-box::before, .widget-box::after {
   content: "";
@@ -354,7 +440,9 @@ html, body, #fullpage{
   box-shadow: 1px 2px 3px #ddd;
   border: 1px solid rgba(190, 126, 74, .3);
   padding: 20px;
-  background: rgba(255, 255, 255, .85)
+  /* background: rgba(255, 255, 255, .85) */
+  /* background: rgba(255, 255, 255, .49) */
+  /*在 #wrapper 中使用全局透明背景，就不用单独设置.global-container .widget-box #header的背景属性了*/
 }
 .article {
   margin-bottom: 50px;
