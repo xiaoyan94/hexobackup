@@ -105,6 +105,10 @@ td {
 
 a img {
   border: none;
+  opacity: .6;
+}
+a img:hover {
+  opacity: 1;
 }
 input,
 button {
