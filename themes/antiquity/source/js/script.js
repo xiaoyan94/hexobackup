@@ -327,7 +327,9 @@ class utils {
 
   }
   
-//alert(utils.BrowserType()['supporter']);
+  console.log(
+    "utils.BrowserType()['supporter'] = " + utils.BrowserType()["supporter"]
+  );
   var offset = 100,
         offset_opacity = 1200,
         scroll_top_duration = 700,
@@ -350,7 +352,8 @@ class utils {
     });
   }else{
     $("body").css({
-      "background-image": "url(../images/bg.jpg)"});
+      "background-image": "url(/images/bg.jpg)"});
+      // "background-image": "url(https://s2.hdslb.com/bfs/static/blive/blfe-dynamic-web/static/img/background.bc725153.png)"});
   }
   window.onscroll = function () {
         if ($(this).scrollTop() > offset_opacity) {
