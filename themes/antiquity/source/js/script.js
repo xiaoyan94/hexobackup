@@ -352,8 +352,11 @@ class utils {
     });
   }else{
     $("body").css({
-      "background-image": "url(/images/bg.jpg)"});
-      // "background-image": "url(https://s2.hdslb.com/bfs/static/blive/blfe-dynamic-web/static/img/background.bc725153.png)"});
+      // 随机图片：https://api.ixiaowai.cn/api/api.php
+      // 随机图片：https://laosepi.org/pic.php
+      //"background-image": "url(/images/bg.jpg)"}); //默认
+      //"background-image": "url(https://s2.hdslb.com/bfs/static/blive/blfe-dynamic-web/static/img/background.bc725153.png)"}); //bilibili
+      "background-image": "url(https://api.ixiaowai.cn/api/api.php)"});
   }
   window.onscroll = function () {
         if ($(this).scrollTop() > offset_opacity) {
