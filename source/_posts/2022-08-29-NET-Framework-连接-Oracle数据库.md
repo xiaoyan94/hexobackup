@@ -4,9 +4,24 @@ date: 2022-08-29 16:13:41
 tags:
 ---
 
-## 解决错误信息：找不到请求的 .Net Framework Data Provider。可能没有安装
+* [1. 错误信息](#1-错误信息)
+  * [1.1. 错误详情](#11-错误详情)
+* [2. 问题原因](#2-问题原因)
+* [3. 查看与设置ORACLE_HOME环境变量](#3-查看与设置oracle_home环境变量)
+  * [3.1. Windows下查看与设置环境变量](#31-windows下查看与设置环境变量)
+* [4. 下载与安装ODP.NET驱动](#4-下载与安装odpnet驱动)
+* [5. Oracle数据库连接配置](#5-oracle数据库连接配置)
+  * [5.1. 分析与解决错误](#51-分析与解决错误)
+    * [5.1.1. 先了解下 oracle `tnsnames.ora` 文件用法](#511-先了解下-oracle-tnsnamesora-文件用法)
+      * [5.1.1.1. 1.用途](#5111-1用途)
+      * [5.1.1.2. 2.用法](#5112-2用法)
+  * [5.2. 解决方法](#52-解决方法)
 
-### “/”应用程序中的服务器错误
+## 1. 错误信息
+
+解决错误信息：**找不到请求的 .Net Framework Data Provider。可能没有安装**
+
+### 1.1. 错误详情
 
 ![找不到请求的 .Net Framework Data Provider。可能没有安装。](2022-08-29-NET-Framework-连接-Oracle数据库/2022-08-30-08-53-43.png)
 
@@ -14,7 +29,9 @@ tags:
 
 ---
 
-## *找不到请求的 .Net Framework Data Provider。可能没有安装。*
+“/”应用程序中的服务器错误
+
+*找不到请求的 .Net Framework Data Provider。可能没有安装。*
 
 **说明:** 执行当前 Web 请求期间，出现未经处理的异常。请检查堆栈跟踪信息，以了解有关该错误以及代码中导致错误的出处的详细信息。
 
@@ -70,7 +87,7 @@ tags:
 
 ---
 
-## 问题原因
+## 2. 问题原因
 
 出现此错误的原因是：**Oracle数据库的ODP.NET驱动没有安装**。
 
@@ -80,15 +97,7 @@ ps:
 
 ---
 
-## Windows下查看与设置环境变量
-
-使用命令或在系统环境变量中设置 `ORACLE_HOME` 环境变量。
-
-命令设置方式参考：
-
-[Windows10通过cmd命令行添加环境变量_code_god_1024的博客-CSDN博客_命令行添加环境变量](https://blog.csdn.net/csdjia11/article/details/107773757)
-
-## 设置ORACLE_HOME环境变量
+## 3. 查看与设置ORACLE_HOME环境变量
 
 查看设置的环境变量是否正确: `echo %ORACLE_HOME%`
 
@@ -101,9 +110,17 @@ D:\app\R00004050\product\11.2.0\client_1
 
 ![添加环境变量](2022-08-29-NET-Framework-连接-Oracle数据库/2022-08-30-10-58-26.png)
 
+### 3.1. Windows下查看与设置环境变量
+
+使用命令或在系统环境变量中设置 `ORACLE_HOME` 环境变量。
+
+命令设置方式参考：
+
+[Windows10通过cmd命令行添加环境变量_code_god_1024的博客-CSDN博客_命令行添加环境变量](https://blog.csdn.net/csdjia11/article/details/107773757)
+
 ---
 
-## 下载与安装ODP.NET驱动
+## 4. 下载与安装ODP.NET驱动
 
 .Net应用程序与ODP.Net处理器类型保持一致。
 
@@ -115,8 +132,7 @@ D:\app\R00004050\product\11.2.0\client_1
 <PlatformTarget>x86</PlatformTarget>
 ```
 
-我是32位x
-86版本，.Net Framework 4.0
+我是32位x86版本，.Net Framework 4.0, 所以下载`32位版ODP.NET`。
 
 下载地址(总揽):
 <http://www.oracle.com/technetwork/topics/dotnet/downloads/index.html>
@@ -131,15 +147,17 @@ D:\app\R00004050\product\11.2.0\client_1
 
 下载解压后，打开文件 `readme.htm` 查看安装方法（管理员模式CMD命令安装）。
 
-CMD（管理员模式）：
+CMD（管理员模式打开），`cd` 进入`ODP.NET`解压目录（如果解压目录在D盘，需要先输入`D:\`进入D盘，再输入`cd D:\你的解压目录\`）：
 
 ```CMD
+D:\
+cd 你的解压目录
 install_odpm.bat %ORACLE_HOME% both true
 ```
 
-使用命令安装完成后，查看是否生成节点信息。在对应的.NetFramework版本下查看 `machine.config`里面的`<system.data><DbProviderFactories>`节点。
+使用命令安装完成后，查看是否生成节点信息:在对应的.NetFramework版本下查看 `machine.config`里面的`<system.data><DbProviderFactories>`节点。
 
-我的文件在：`C:\Windows\Microsoft.NET\Framework\v4.0.30319\Config\machine.config`
+我的文件在：`C:\Windows\Microsoft.NET\Framework\v4.0.30319\Config\machine.config`，如下图：
 
 [![vhE8HI.png](https://s1.ax1x.com/2022/08/30/vhE8HI.png)](https://imgse.com/i/vhE8HI)
 
@@ -157,11 +175,13 @@ install_odpm.bat %ORACLE_HOME% both true
 
 ---
 
-至此，驱动应该安装完成了。
+至此，**驱动应该安装完成了**。这个错误也解决了。下面的错误和ODP.NET驱动实际上没关系。
 
 ---
 
-## 安装ODP.NET后重启应用
+## 5. Oracle数据库连接配置
+
+安装ODP.NET后重启应用
 
 ![“/”应用程序中的服务器错误](2022-08-29-NET-Framework-连接-Oracle数据库/2022-08-30-08-52-27.png)
 
@@ -169,7 +189,7 @@ install_odpm.bat %ORACLE_HOME% both true
 
 ---
 
-## *ORA-01017: invalid username/password; logon denied*
+ORA-01017: *invalid username/password; logon denied*
 
 **说明:** 执行当前 Web 请求期间，出现未经处理的异常。请检查堆栈跟踪信息，以了解有关该错误以及代码中导致错误的出处的详细信息。
 
@@ -222,7 +242,7 @@ install_odpm.bat %ORACLE_HOME% both true
    System.Web.UI.Page.ProcessRequestMain(Boolean includeStagesBeforeAsyncPoint, Boolean includeStagesAfterAsyncPoint) +693
 ```
 
-### 解决错误
+### 5.1. 分析与解决错误
 
 出现此错误，说明前面安装Oracle连接驱动正常，但是连接配置有问题，所以报用户名密码无效。
 
@@ -238,15 +258,15 @@ providerName="System.Data.EntityClient" />
 
 关注这里的 `data source`, `password`, `user id` 几个关键属性。我们的报错信息 `Oracle.ManagedDataAccess.Client.OracleException: ORA-01017: invalid username/password; logon denied` 主要和这几个参数配置有关。
 
-#### 先了解下 oracle `tnsnames.ora` 文件用法
+#### 5.1.1. 先了解下 oracle `tnsnames.ora` 文件用法
 
-##### 1.用途
+##### 5.1.1.1. 1.用途
 
 Oracle客户端所需要的一个文件，通过该文件可以配置数据库的连接地址，配好后，Oracle地址了，直接用简易的字符串代替。
 
 如：本该是数据库地址为：`127.0.0.1:1521/orcl`,通过设置`tnsnames.ora`,为它起的别名为：`dataBaseAddr`,就可以用 `dataBaseAddr` 代替了。
 
-##### 2.用法
+##### 5.1.1.2. 2.用法
 
 用以管理员方式运行文本编辑器，打开Oracle客户端目录的`D:\app\R00004050\product\11.2.0\client_1\network\admin\tnsnames.ora`文件，内容如下：
 
@@ -267,7 +287,7 @@ ORCL =
 
 在我们的项目中的连接字符串所设置的`data source=ORCL` 属性，这里的`ORCL`就是`tnsnames.ora`文件中所配置的别名 `ORCL = (...)`。
 
-### 解决方法
+### 5.2. 解决方法
 
 解决方法：检查项目 `app.config` 的 `user id`, `password` 以及这里`tnsnames.ora`文件的 `HOST`,`PORT` 是否正确。
 
