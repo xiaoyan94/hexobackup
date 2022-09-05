@@ -120,15 +120,20 @@ backup:
     # coding: https://git.coding.net/hojun/hojun.git,backup
 
 #RSS
+# Feed Atom
 feed:
+  enable: true
   type: atom
   path: atom.xml
-  limit: 20
+  limit: false
   hub:
-  content:
-  content_limit: 140
-  content_limit_delim: ' '
+  content: true
+  content_limit: 
+  content_limit_delim: 
   order_by: -date
+  icon: 
+  autodiscovery: true
+  template:
 
 # Security
 encrypt: # hexo-blog-encrypt
