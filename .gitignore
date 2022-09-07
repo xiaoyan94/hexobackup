@@ -11,3 +11,4 @@ chromedriver
 source/categories/index.md
 source/tags/index.md
 javascriptdemo/
+.vscode/launch.json
