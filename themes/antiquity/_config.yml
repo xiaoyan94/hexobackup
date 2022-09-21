@@ -2,6 +2,8 @@
 menu:
   首页: /
   归档: /archives
+  # 标签: /tags
+  # 分类: /categories
   小抄: /quick-notes
   关于: /about
 

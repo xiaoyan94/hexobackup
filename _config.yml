@@ -4,9 +4,9 @@
 
 # Site
 title: 空城盼故人
-subtitle:
+subtitle: 许嵩老公的博客
 description: 深吸一口梦，吹个气球存起来
-keywords:
+keywords: 许嵩老公
 author: 许嵩老公
 language: zh_CN
 timezone: Asia/Shanghai
@@ -120,15 +120,20 @@ backup:
     # coding: https://git.coding.net/hojun/hojun.git,backup
 
 #RSS
+# Feed Atom
 feed:
+  enable: true
   type: atom
   path: atom.xml
-  limit: 20
+  limit: false
   hub:
-  content:
-  content_limit: 140
-  content_limit_delim: ' '
+  content: true
+  content_limit: 
+  content_limit_delim: 
   order_by: -date
+  icon: 
+  autodiscovery: true
+  template:
 
 # Security
 encrypt: # hexo-blog-encrypt
@@ -148,3 +153,19 @@ mermaid: ## mermaid url https://github.com/knsv/mermaid
   version: "7.1.2" # default v7.1.2
   options:  # find more api options from https://github.com/knsv/mermaid/blob/master/src/mermaidAPI.js
     #startOnload: true  // default true
+
+robotstxt:
+  useragent: "*"
+  # disallow:
+  #   - /one_file_to_disallow.html
+  #   - /2nd_file_to_disallow.html
+  #   - /3rd_file_to_disallow.html
+  allow:
+    - /
+    - /archives/
+    - /quick-notes/
+    - /about/
+    # - /categories/
+  sitemap: 
+    - /sitemap.xml
+    - /baidu_sitemap.xml
