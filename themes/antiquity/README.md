@@ -1,17 +1,19 @@
 # Antiquity
 
 一个有点古风的Hexo主题，来自一个不会设计不会配色的前端渣渣。
+
 - [预览](https://yiluyanxia.site)
 
-## 安装
+## 安装zsbd
 
 ### 安装
 
 ``` bash
-$ git clone https://github.com/yiluyanxia/hexo-theme-antiquity.git
+git clone https://github.com/yiluyanxia/hexo-theme-antiquity.git
 ```
 
 ### 使用
+
 将根目录中的config.yml文件中的theme修改为antiquity
 
 ### 更新
@@ -20,7 +22,9 @@ $ git clone https://github.com/yiluyanxia/hexo-theme-antiquity.git
 cd themes/antiquity
 git pull
 ```
+
 ## 配置
+
 ``` yml
 # Header
 menu:
@@ -75,6 +79,7 @@ baidu_site_verification:
 blogroll:
   一路眼瞎: https://yiluyanxia.github.io/
 ```
+
 - **menu** -导航菜单
 - **rss** - RSS 链接
 - **excerpt_link** - 文章尾部阅读全文链接所显示的文字.设置为‘false’则隐藏。
@@ -92,8 +97,10 @@ blogroll:
 ## 特性
 
 ### Fancybox
+
 使用Fancybox展示图片。
-```
+
+```ejs
 ![img caption](img url)
 
 {% fancybox img_url [img_thumbnail] [img_caption] %}
