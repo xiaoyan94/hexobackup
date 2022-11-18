@@ -1,5 +1,7 @@
 name: Sync
 
+# 在本仓库提交更新时，触发编译 Gitee Pages
+
 on:
   push:
     branches: [master]
