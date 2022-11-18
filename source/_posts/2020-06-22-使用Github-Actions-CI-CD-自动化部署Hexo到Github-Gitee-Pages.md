@@ -4,6 +4,8 @@ date: 2020-06-22 13:56:03
 tags: [Github,hexo,Github Actions]
 ---
 
+![流程图](2020-06-22-使用Github-Actions-CI-CD-自动化部署Hexo到Github-Gitee-Pages/流程图.png)
+
 在当前仓库 `hexobackup` 配置以下工作流，实现向当前仓库提交更新时，触发 GitPages 自动编译。
 
 ```mermaid
