@@ -129,6 +129,7 @@
   font-family: "Source Code Pro", Consolas, Monaco, Menlo, Consolas, monospace;
 }
 .article-content code {
+  /* 透明度 */
   background: rgba(238, 238, 238, 0.395);
   /* 添加圆角 */
   border-radius: 5px;
