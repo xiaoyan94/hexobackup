@@ -30,7 +30,8 @@ category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
 ## This also can be used to exclude posts, https://github.com/micromatch/micromatch#extended-globbing
-skip_render: "_posts/*国际学术交流**.md"
+skip_render: 
+  - "_posts/*国际学术交流**.md"
 
 # Writing
 new_post_name: :year-:month-:day-:title.md # File name of new posts
