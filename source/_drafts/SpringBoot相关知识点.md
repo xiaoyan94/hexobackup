@@ -20,7 +20,8 @@ tags:
     * [瘦身打包插件原理](#瘦身打包插件原理)
       * [瘦身打包——预热](#瘦身打包预热)
   * [使用环境变量](#使用环境变量)
-  * [使用Profiles进行条件装配](#使用profiles进行条件装配)
+  * [使用Profiles进行不同环境的配置](#使用profiles进行不同环境的配置)
+    * [使用Profiles进行条件装配](#使用profiles进行条件装配)
   * [使用Conditional进行条件装配](#使用conditional进行条件装配)
   * [加载配置到Bean中](#加载配置到bean中)
 
@@ -274,7 +275,116 @@ spring:
 APP_PORT=801 java -Dthin.dryrun=false -Dthin.root=. -jar target/springboot-hello-1.0-SNAPSHOT.jar
 ```
 
-### 使用Profiles进行条件装配
+### 使用Profiles进行不同环境的配置
+
+* 通过Profile可以实现一套代码在不同环境启用不同的配置和功能。
+* Spring Boot允许在一个配置文件中针对不同Profile进行配置；
+* Spring Boot在未指定Profile时默认为default。
+
+Profile本身是Spring提供的功能，Profile表示一个环境的概念，如开发、测试和生产这3个环境：
+
+* native
+* test
+* production
+
+或者按git分支定义master、dev这些环境：
+
+* master
+* dev
+
+在启动一个Spring应用程序的时候，可以传入一个或多个环境，例如：
+
+```shell
+-Dspring.profiles.active=test,master
+```
+
+Spring Boot对Profiles的支持在于，可以在application.yml中为每个环境进行配置。下面是一个示例配置：
+
+```yml
+server:
+  port: ${APP_PORT:18081}
+
+spring:
+  application:
+    name: ${APP_NAME:unnamed}
+  datasource:
+    url: jdbc:hsqldb:file:testdb
+    username: sa
+    password:
+    driver-class-name: org.hsqldb.jdbc.JDBCDriver
+    # HikariCP配置:
+    hikari:
+      auto-commit: false
+      connection-timeout: 3000
+      validation-timeout: 3000
+      max-lifetime: 60000
+      maximum-pool-size: 20
+      minimum-idle: 1
+
+pebble:
+  suffix:
+  cache: false
+
+#  Spring Boot对Profiles的支持在于，可以在application.yml中为每个环境进行配置。下面是一个示例配置：
+---
+spring:
+  config:
+    activate:
+      on-profile: test,debug
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, beans, env, metrics
+server:
+  port: ${APP_PORT:8000}
+  # 使用环境变量: APP_PORT=801 java -Dthin.dryrun=false -Dthin.root=. -Dspring.profiles.active=test -jar target/springboot-hello-1.0-SNAPSHOT.jar
+
+---
+spring:
+  config:
+    activate:
+      on-profile: production
+server:
+  port: 80
+
+pebble:
+  cache: true
+#  注意到分隔符---，最前面的配置是默认配置，不需要指定Profile，后面的每段配置都必须以spring.config.activate.on-profile.profiles: xxx开头，表示一个Profile。
+#  上述配置默认使用的前面配置的端口，但是在test环境下，使用8000端口，在production环境下，使用80端口，并且启用Pebble的缓存。
+#  如果不指定任何Profile，直接启动应用程序，那么Profile实际上就是default，可以从Spring Boot启动日志看
+#  可以使用条件装配 @Profile("default") @Profile("test") @Profile("production")实现不同环境下使用不同的bean
+
+```
+
+指定了`-Dspring.profiles.active=test`，那么Profile实际上就是`test`，，可以从Spring Boot启动日志看出：
+
+```shell
+  APP_PORT=801 java -Dthin.dryrun=false -Dthin.root=. -Dspring.profiles.active=test -jar target/springboot-hello-1.0-SNAPSHOT.jar
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.0.2)
+
+...
+
+2023-02-06T22:44:23.010+08:00  INFO 2452 --- [           main] com.itranswarp.learnjava.Application     : The following 1 profile is active: "test"
+...
+2023-02-06T22:44:24.419+08:00  INFO 2452 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 801 (http)
+...
+2023-02-06T22:44:25.837+08:00  INFO 2452 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 801 (http) with context path ''
+...
+```
+
+#### 使用Profiles进行条件装配
+
+在接口实现类的 Bean 上使用`@Profile("default")`注解，即默认启用该 Bean；在另一个实现类上使用`@Profile("!default")`注解，即非`default`环境时，启用该 Bean。
+
+这样，一套代码，就实现了不同环境启用不同的配置。根据`Component`的不同`@Profile`注解，决定装配哪个`Component`的过程就是**条件装配**。
 
 ### 使用Conditional进行条件装配
 
