@@ -10,6 +10,7 @@ tags: [JavaScript]
   * [检查浏览器是否支持](#检查浏览器是否支持)
   * [打开串行端口](#打开串行端口)
 * [地磅读数代码示例](#地磅读数代码示例)
+* [Chrome浏览器配置在http协议使用Web串行Api](#chrome浏览器配置在http协议使用web串行api)
 
 <!-- more -->
 
@@ -698,3 +699,15 @@ function toast(text) {
     });
 }
 ```
+
+## Chrome浏览器配置在http协议使用Web串行Api
+
+Web串行Api需要域是HTTPS协议的，否则该api被Chrome屏蔽，无法被调用。仅在本地localhost调试开发时可以使用http域，Chrome浏览器会暴露该api。
+
+可以通过配置Chrome浏览器解除这个限制，需要配置两个地方：
+
+1. 打开`chrome://flags/`，设置`Insecure origins treated as secure`为`Enabeld`，填入要配置的域名`http://192.168.80.53:9000`
+![配置chrome://flags/](2022-11-18-JavaScript使用-Web-Serial-API获取串行设备端口数据-地磅串口数据/2023-02-08-10-58-04.png)
+   * Enable Bluetooth Serial Port Profile in Serial API为开启蓝牙设备串行api。
+1. 在桌面`Google Chrome`图标的快捷方式上，鼠标右键点`属性`，修改`目标`字段加上启动参数，修改后为`"C:\Program Files\Google\Chrome\Application\chrome.exe" --unsafely-treat-insecure-origin-as-secure="http://192.168.80.53:9000"`
+![快捷方式——目标添加启动参数](2022-11-18-JavaScript使用-Web-Serial-API获取串行设备端口数据-地磅串口数据/2023-02-08-10-59-40.png)
