@@ -10,7 +10,7 @@ tags: [JavaScript]
   * [检查浏览器是否支持](#检查浏览器是否支持)
   * [打开串行端口](#打开串行端口)
 * [地磅读数代码示例](#地磅读数代码示例)
-* [Chrome浏览器配置在http协议使用Web串行Api](#chrome浏览器配置在http协议使用web串行api)
+* [chrome浏览器配置在http协议使用web串行api](#chrome浏览器配置在http协议使用web串行api)
 
 <!-- more -->
 
@@ -700,7 +700,7 @@ function toast(text) {
 }
 ```
 
-## Chrome浏览器配置在http协议使用Web串行Api
+## chrome浏览器配置在http协议使用web串行api
 
 Web串行Api需要域是HTTPS协议的，否则该api被Chrome屏蔽，无法被调用。仅在本地localhost调试开发时可以使用http域，Chrome浏览器会暴露该api。
 
