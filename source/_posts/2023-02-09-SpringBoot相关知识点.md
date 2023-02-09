@@ -1,16 +1,28 @@
 ---
 title: SpringBoot项目相关知识点
-tags: 
+tags:
   - Java
   - SpringBoot
+date: 2023-02-09 14:22:09
 ---
+
+## Spring与SpringBoot
+
+Spring框架，它的主要功能包括IoC容器、AOP支持、事务支持、MVC开发以及强大的第三方集成功能等。
+
+那么，Spring Boot又是什么？**它和Spring是什么关系**？
+
+[Spring Boot](https://spring.io/projects/spring-boot)是一个基于Spring的套件，它帮我们预组装了Spring的一系列组件，以便以尽可能少的代码和配置来开发基于Spring的Java应用程序。
+
+<!-- more -->
+
 * [Spring与SpringBoot](#spring与springboot)
-* [SpringBoot配置](#springboot配置)
+* [springboot配置](#springboot配置)
   * [配置文件格式](#配置文件格式)
   * [自动配置和自动扫描](#自动配置和自动扫描)
-  * [SpringBoot自动重新加载](#springboot自动重新加载)
-    * [解决Idea中自动重启不生效](#解决idea中自动重启不生效)
-  * [打包SpringBoot应用](#打包springboot应用)
+  * [springboot自动重新加载](#springboot自动重新加载)
+    * [解决idea中自动重启不生效](#解决idea中自动重启不生效)
+  * [打包springboot应用](#打包springboot应用)
     * [打jar包和运行jar包](#打jar包和运行jar包)
     * [打包时排除开发者工具](#打包时排除开发者工具)
     * [指定打包文件名称](#指定打包文件名称)
@@ -20,18 +32,10 @@ tags:
     * [瘦身打包插件原理](#瘦身打包插件原理)
       * [瘦身打包——预热](#瘦身打包预热)
   * [使用环境变量](#使用环境变量)
-  * [使用Profiles进行不同环境的配置](#使用profiles进行不同环境的配置)
-    * [使用Profiles进行条件装配](#使用profiles进行条件装配)
-  * [使用Conditional进行条件装配](#使用conditional进行条件装配)
-  * [加载配置到Bean中](#加载配置到bean中)
-
-## Spring与SpringBoot
-
-Spring框架，它的主要功能包括IoC容器、AOP支持、事务支持、MVC开发以及强大的第三方集成功能等。
-
-那么，Spring Boot又是什么？**它和Spring是什么关系**？
-
-[Spring Boot](https://spring.io/projects/spring-boot)是一个基于Spring的套件，它帮我们预组装了Spring的一系列组件，以便以尽可能少的代码和配置来开发基于Spring的Java应用程序。
+  * [使用profiles进行不同环境的配置](#使用profiles进行不同环境的配置)
+    * [使用profiles进行条件装配](#使用profiles进行条件装配)
+  * [使用conditional进行条件装配](#使用conditional进行条件装配)
+  * [加载配置到bean中](#加载配置到bean中)
 
 本文Spring Boot版本是3.x版，如果使用Spring Boot 2.x则需注意，两者有以下不同：
 
@@ -45,7 +49,7 @@ Spring框架，它的主要功能包括IoC容器、AOP支持、事务支持、MV
 | JMS包 | javax.jms | jakarta.jms |
 | JavaMail包 | javax.mail | jakarta.mail |
 
-## SpringBoot配置
+## springboot配置
 
 ### 配置文件格式
 
@@ -59,7 +63,7 @@ Spring Boot有非常强大的`AutoConfiguration`功能，它是通过**自动扫
 
 启动Spring Boot应用程序只需要一行代码加上一个注解`@SpringBootApplication`，这样一个注解就相当于启动了**自动配置和自动扫描**。
 
-### SpringBoot自动重新加载
+### springboot自动重新加载
 
 只需添加如下依赖到`pom.xml`：
 
@@ -79,7 +83,7 @@ Spring Boot有非常强大的`AutoConfiguration`功能，它是通过**自动扫
 
 Spring Boot 提供的 `devtools` 可以监控 classpath 路径上的文件。只要源码或配置文件发生修改，Spring Boot 应用可以自动重启。在开发阶段，这个功能比较有用。
 
-#### 解决Idea中自动重启不生效
+#### 解决idea中自动重启不生效
 
 修改了类文件后，idea不会自动编译，得修改idea设置。需要两步操作：
 
@@ -88,7 +92,7 @@ Spring Boot 提供的 `devtools` 可以监控 classpath 路径上的文件。只
 
 以上在IntelliJ IDEA 2022.3.2中测试ok。
 
-### 打包SpringBoot应用
+### 打包springboot应用
 
 Spring Boot提供了一个Maven插件用于打包所有依赖到单一jar文件，此插件十分易用，无需配置。
 
@@ -275,7 +279,7 @@ spring:
 APP_PORT=801 java -Dthin.dryrun=false -Dthin.root=. -jar target/springboot-hello-1.0-SNAPSHOT.jar
 ```
 
-### 使用Profiles进行不同环境的配置
+### 使用profiles进行不同环境的配置
 
 * 通过Profile可以实现一套代码在不同环境启用不同的配置和功能。
 * Spring Boot允许在一个配置文件中针对不同Profile进行配置；
@@ -380,12 +384,12 @@ pebble:
 ...
 ```
 
-#### 使用Profiles进行条件装配
+#### 使用profiles进行条件装配
 
 在接口实现类的 Bean 上使用`@Profile("default")`注解，即默认启用该 Bean；在另一个实现类上使用`@Profile("!default")`注解，即非`default`环境时，启用该 Bean。
 
 这样，一套代码，就实现了不同环境启用不同的配置。根据`Component`的不同`@Profile`注解，决定装配哪个`Component`的过程就是**条件装配**。
 
-### 使用Conditional进行条件装配
+### 使用conditional进行条件装配
 
-### 加载配置到Bean中
+### 加载配置到bean中
