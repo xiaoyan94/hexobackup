@@ -31,7 +31,7 @@ code_dir: downloads/code
 i18n_dir: :lang
 ## This also can be used to exclude posts, https://github.com/micromatch/micromatch#extended-globbing
 skip_render: 
-  - "_posts/*国际学术交流**.md"
+  # - "_posts/*国际学术交流**.md"
 
 # Writing
 new_post_name: :year-:month-:day-:title.md # File name of new posts
@@ -104,8 +104,8 @@ theme: antiquity
 deploy:
   type: git
   repo: 
-    github: git@github.com:xiaoyan94/xiaoyan94.github.io.git
     gitee: git@gitee.com:xy94/xy94.git
+    github: git@github.com:xiaoyan94/xiaoyan94.github.io.git
     # github: git@github.com:honjun/honjun.github.io.git
     # github: https://github.com/honjun/honjun.github.io.git
     # coding: https://git.coding.net/hojun/hojun.git
@@ -116,8 +116,8 @@ backup:
   type: git
   message: backup my blog of https://xiaoyan94.github.io/
   repository:
-    github: git@github.com:xiaoyan94/xiaoyan94.github.io.git,backup
     gitee: git@gitee.com:xy94/xy94.git,backup
+    github: git@github.com:xiaoyan94/xiaoyan94.github.io.git,backup
     # github: https://github.com/honjun/honjun.github.io.git,backup
     # coding: https://git.coding.net/hojun/hojun.git,backup
 
