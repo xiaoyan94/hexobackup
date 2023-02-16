@@ -1008,3 +1008,8 @@ body,
 .mermaid {
   background: transparent !important;
 }
+
+/* Valine评论区字体 */
+.v[data-class=v] .vinput, .v[data-class=v] .veditor, .v[data-class=v] p, .v[data-class=v] pre code, .v[data-class=v] .status-bar {
+  font-weight:bolder !important;
+}
