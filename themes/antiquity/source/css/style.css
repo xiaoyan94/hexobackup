@@ -1011,5 +1011,43 @@ body,
 
 /* Valine评论区字体 */
 .v[data-class=v] .vinput, .v[data-class=v] .veditor, .v[data-class=v] p, .v[data-class=v] pre code, .v[data-class=v] .status-bar {
-  font-weight:bolder !important;
+  /* font-weight:bolder !important; */
+  color: #0022ff !important;
+}
+/* Valine评论区，表情预览图标填充色 */
+.v[data-class=v] .vicon {
+  fill: #0088ff !important;
+}
+.v[data-class=v] .vicon:hover {
+  fill: #2600ff !important;
+}
+/* Valine评论区，提交按钮图标填充色 */
+.v[data-class=v] .vbtn {
+  color: #388e3c !important;
+  border-color: #43a047 !important;
+  font-weight: bolder !important;
+}
+.v[data-class=v] .vbtn:hover {
+  color: #0033ff !important;
+  border-color: #0026ff !important;
+  font-weight: bolder !important;
+}
+/* 回复@按钮 */
+.v[data-class=v] .vcards .vcard .vh .vmeta .vat {
+  font-size: .8125em;
+  color: #115bef;
+  cursor: pointer;
+  float: right;
+  /* font-weight: bolder; */
+  text-decoration-line: underline;
+  text-decoration-color: #2800ff;
+}
+.v[data-class=v] .vcards .vcard .vh .vmeta .vat:hover{
+  font-size: .8125em;
+  color: #115bef;
+  cursor: pointer;
+  float: right;
+  font-weight: bolder;
+  text-decoration-line: underline;
+  text-decoration-color: #2800ff;
 }

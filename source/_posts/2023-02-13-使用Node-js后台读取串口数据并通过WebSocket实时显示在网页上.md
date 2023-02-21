@@ -4,7 +4,7 @@ date: 2023-02-13 15:27:39
 tags: [Node.js, Serial Port, WebSocket]
 ---
 
-如果你使用 Node.js 后台读取串口数据并通过 WebSocket 实时显示在网页上，可以使用以下步骤：
+记录一下使用 Node.js 后台读取串口数据并通过 WebSocket 实时显示在网页上的方法，可以使用以下步骤：
 
 1. 使用第三方库 serialport 读取串口数据
 2. 安装 WebSocket 服务器，例如 ws 库
