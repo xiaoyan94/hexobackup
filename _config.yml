@@ -104,7 +104,7 @@ theme: antiquity
 deploy:
   type: git
   repo: 
-    gitee: git@gitee.com:xy94/xy94.git
+    # gitee: git@gitee.com:xy94/xy94.git
     github: git@github.com:xiaoyan94/xiaoyan94.github.io.git
     # github: git@github.com:honjun/honjun.github.io.git
     # github: https://github.com/honjun/honjun.github.io.git
