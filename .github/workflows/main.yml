@@ -46,7 +46,6 @@ jobs:
         echo "$ACTION_DEPLOY_KEY" | tr -d '\r' > ~/.ssh/id_rsa # 配置秘钥
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan github.com >> ~/.ssh/known_hosts
-        ssh-keyscan gitee.com >> ~/.ssh/known_hosts
         # set git infomation
         git config --global user.name 'xiaoyan94' # 换成你自己的邮箱和名字
         git config --global user.email 'ruguo_0904@163.com'
@@ -57,7 +56,7 @@ jobs:
         npm install hexo-generator-baidu-sitemap@0.1.6 --save
         npm install https://github.com/CodeFalling/hexo-asset-image --save
         echo "安装hexo-asset-image,配合vscode-paste-image使用"
-  
+
     - name: Hexo Deploy
       env:
         REPOSITORY_HOME: ${{github.workspace}}
@@ -70,32 +69,3 @@ jobs:
         chmod +x replace_url_baidusitemap.sh
         bash ./replace_url_baidusitemap.sh
         hexo d
-
-    - name: Setup Chrome,selenium env
-      env:
-        REPOSITORY_HOME: ${{github.workspace}}
-      run: |
-        # cd $REPOSITORY_HOME
-        # Install Google Chrome
-        # https://askubuntu.com/questions/79280/how-to-install-chrome-browser-properly-via-command-line
-        # sudo apt-get install libxss1 libappindicator1 libindicator7
-        # wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-        # sudo dpkg -i google-chrome*.deb  # Might show "errors", fixed by next line
-        # sudo apt-get install -f
-        # wget http://chromedriver.storage.googleapis.com/84.0.4147.30/chromedriver_linux64.zip
-        # unzip chromedriver_linux64.zip
-        # pip3 install selenium
-        echo "此步骤已经转移至远程服务器上的脚本执行,通过下面的SSH连接至远程服务器。"
-
-    - name: Auto update Gitee Pages
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        # password: ${{ secrets.SSH_PASSWORD }} 
-        key: ${{ secrets.DEPLOY_BANWAGON_PRIV_KEY }}
-        port: ${{ secrets.SSH_PORT }}
-        script: |
-          # whoami
-          # ls -al
-          python3 update_gitee.py
