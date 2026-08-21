@@ -152,7 +152,7 @@ encrypt: # hexo-blog-encrypt
 # mermaid chart
 mermaid: ## mermaid url https://github.com/knsv/mermaid
   enable: true  # default true
-  version: "7.1.2" # default v7.1.2
+  version: "9.4.3" # 升级自 7.1.2: 7.x 不支持 flowchart/autonumber 等新语法; 9.4.3 向下兼容历史文章语法
   options:  # find more api options from https://github.com/knsv/mermaid/blob/master/src/mermaidAPI.js
     #startOnload: true  // default true
 
