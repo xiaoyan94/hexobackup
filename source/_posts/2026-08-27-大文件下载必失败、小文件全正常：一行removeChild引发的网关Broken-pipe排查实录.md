@@ -3,7 +3,6 @@ title: 大文件下载必失败、小文件全正常：一行removeChild引发�
 date: 2026-08-27 14:42:46
 tags: [前端, JavaScript, EasyUI, 踩坑实录, MES]
 categories: 前端架构
-password: 1qazXSW@
 ---
 
 老 MES 系统新上了一套异步导出：后台游标逐行读、流式写 Excel，完成后落下载记录并弹桌面提醒，用户去"下载中心"页面取件。上线当天就收到一条诡异的反馈：
