@@ -12,6 +12,15 @@ document.body.write(script);
 <% } %>
 
 <%- js('js/script') %>
+<%- js('js/search') %>
+<%- js('js/load') %>
+<!-- 输入爆炸特效：全局生效（搜索框 + 评论区） -->
+<%- js('js/shuru') %>
+<script>
+  POWERMODE.colorful = true;
+  POWERMODE.shake = true;
+  document.body.addEventListener('input', POWERMODE);
+</script>
 <%- partial('gauges-analytics') %>
 
 <script>

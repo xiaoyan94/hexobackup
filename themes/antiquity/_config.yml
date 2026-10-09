@@ -78,3 +78,7 @@ baidusitemap:
 blogroll:
   Github Pages: https://xiaoyan94.github.io/
   Gitee Pages: https://xy94.gitee.io/
+
+# 开启搜索
+local_search:
+  enable: true

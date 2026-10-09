@@ -1,0 +1,224 @@
+/* 适配 antiquity 主题：.nav-box 为 flex 导航条（50px 高），搜索框作为普通 flex 子项内联 */
+.local-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  align-self: center;
+  width: auto;
+  min-width: 0;
+  height: auto;
+  margin-left: 12px;
+}
+
+.local-search-input-cls {
+  position: static;
+  width: 150px;
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid #CCC;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.85);
+  color: #666;
+  font-size: 0.9em;
+  line-height: 26px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+#menu-item input {
+  padding: 0;
+  border-width: 1px;
+}
+
+/* 关闭按钮专属头部行：位于滚动区域之外，滚动条不再遮挡 ✕ */
+.local-search-head {
+  position: relative;
+  z-index: 2;
+  height: 32px;
+  margin: -14px -14px 8px 0;
+}
+
+/* 关闭按钮：无框大热区，✕ 字形，hover 暖棕底 + 转 90 度 */
+#local-search-close {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 32px;
+  height: 32px;
+  line-height: 32px;
+  text-align: center;
+  font-size: 20px;
+  font-family: "Segoe UI Symbol", "Microsoft YaHei", system-ui, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  color: #b3927a;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  display: block;
+  cursor: pointer;
+  transform: rotate(0deg);
+  transition: all 0.25s;
+}
+
+#local-search-close:hover {
+  color: #6b4a2f;
+  background: rgba(190, 126, 74, 0.14);
+  transform: rotate(90deg);
+  transition: all 0.25s;
+}
+
+/* 弹窗卡片：沿用 .global-container 配方（暖棕描边 + 半透明白底）+ .widget-box 的窗棂四角贴片 */
+.local-search-result-cls {
+  position: fixed;
+  z-index: 99;
+  width: 94vw;
+  width: min(880px, 94vw);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 30px;
+  border: 1px solid rgba(190, 126, 74, 0.3);
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 1px 2px 3px #ddd;
+}
+
+/* 未搜索时容器为空，整体隐藏（卡片 + 窗棂都不出现） */
+.local-search-result-cls:empty {
+  display: none;
+}
+
+.local-search-result-cls::before,
+.local-search-result-cls::after {
+  content: "";
+  display: block;
+  width: 120px;
+  height: 72px;
+  background: url("../images/icons/css_window_frame.png");
+  background-size: cover;
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.local-search-result-cls::before {
+  left: 0;
+  top: 0;
+}
+
+.local-search-result-cls::after {
+  transform: rotate(180deg);
+  right: 0;
+  bottom: 0;
+}
+
+.local-search-result-cls .local-search-empty {
+  position: relative;
+  z-index: 2;
+  color: #8d7f70;
+  line-height: 44px;
+  text-align: center;
+  display: block;
+  font-size: 16px;
+  font-weight: normal;
+}
+
+.local-search-result-cls ul {
+  position: relative;
+  z-index: 2;
+  width: auto;
+  max-height: 520px;
+  max-height: 68vh;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 10px 0 0;
+}
+
+.local-search-result-cls ul li {
+  text-align: left;
+  border-bottom: 1px solid rgba(190, 126, 74, 0.25);
+  padding: 0 0 14px;
+  margin: 0 0 14px;
+  line-height: 1.7;
+  font-weight: normal;
+}
+
+.local-search-result-cls ul li:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+/* 弹窗挂在 .nav-box 内，.nav-box a:hover 是 (0,2,1)，高于类选择器，
+   必须 用 #local-search-result 的 ID 权重才能在 hover 状态压住导航的
+   Glow 动画 / font-size: larger / font-weight: bolder */
+#local-search-result ul li a {
+  display: block;
+  padding: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0 0 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: none;
+  -webkit-animation: none;
+}
+
+#local-search-result ul li a:hover,
+#local-search-result ul li a:focus {
+  color: #a4652f;
+  text-shadow: none;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+  padding: 0;
+  animation: none;
+  -webkit-animation: none;
+}
+
+.local-search-result-cls ul li p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  max-height: 150px;
+  overflow: hidden;
+}
+.local-search-result-cls ul li em.search-keyword {
+  color: #a4652f;
+  background: rgba(190, 126, 74, 0.15);
+  padding: 0 2px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+
+.local-search-plugin .local-search-input-cls {
+  opacity: 0.6;
+  transition: all 0.3s;
+}
+
+.local-search-plugin .local-search-input-cls:hover,
+.local-search-plugin .local-search-input-cls:focus {
+  opacity: 1;
+  width: 200px;
+  transition: all 0.3s;
+}
+
+.local-search-plugin .icon {
+  position: relative;
+  left: -30px;
+  color: #999;
+  cursor: pointer;
+}
+
+
+/* 标题常态黑色；hover 已由上方 ID 规则压掉主题发光动画，只做平稳变色 */
+.search-result-title {
+  color: rgb(0, 0, 0);
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.search-result {
+  color: #413f3f;
+}
