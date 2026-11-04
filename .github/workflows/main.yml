@@ -59,13 +59,6 @@ jobs:
         npm install https://github.com/CodeFalling/hexo-asset-image --save
         echo "安装hexo-asset-image,配合vscode-paste-image使用"
 
-    - name: SSH probe
-      # 诊断步骤：确认部署密钥被 ssh 加载且 github.com 认证通过（-v 只输出指纹不泄密钥）
-      run: |
-        ls -la ~/.ssh
-        ssh-keygen -lf ~/.ssh/id_rsa || echo "key unreadable"
-        ssh -vT git@github.com 2>&1 | tail -25 || true
-
     - name: Hexo Deploy
       env:
         REPOSITORY_HOME: ${{github.workspace}}
