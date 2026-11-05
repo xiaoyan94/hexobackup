@@ -143,9 +143,9 @@ encrypt: # hexo-blog-encrypt
   abstract: 有东西被加密了, 请输入密码查看.
   message: 您好, 这里需要密码.
   tags:
-  - {name: BambooCloud, password: 1qazXSW@}
-  - {name: 竹云, password: 1qazXSW@}
-  - {name: 神秘标签, password: 1234567890}
+  - {name: BambooCloud, password: vae514}
+  - {name: 竹云, password: vae514}
+  - {name: 神秘标签, password: vae514}
   theme: xray
   wrong_pass_message: 抱歉, 这个密码看着不太对, 请再试试.
   wrong_hash_message: 抱歉, 这个文章不能被校验, 不过您还是能看看解密后的内容.
